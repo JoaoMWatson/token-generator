@@ -25,7 +25,7 @@ class TokenGenerator:
         return image_bg_removed
 
     def _add_token_to_image(self, image_bg_removed: Image):
-        border = Image.open('./border.png')
+        border = Image.open('token_generator/border.png')
 
         image_bg_removed_resized = image_bg_removed.resize((256, 256))
         image_bg_removed_resized.save(f'{self.path}/{self.file_name}-resized.png', 'PNG')
@@ -54,10 +54,6 @@ class TokenGenerator:
         print('Token criado com sucesso!')
 
 
-@app.command('create-token')
+@app.command()
 def main(input_path: str):
     TokenGenerator(input_path).create_token()
-
-
-if __name__ == '__main__':
-    typer.run(main)
