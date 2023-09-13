@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 import typer
@@ -25,9 +26,9 @@ class TokenGenerator:
         return image_bg_removed
 
     def _add_token_to_image(self, image_bg_removed: Image):
-        border = Image.open('token_generator/border.png')
+        border = Image.open(f'{os.getcwd()}/token_generator/border.png')
 
-        image_bg_removed_resized = image_bg_removed.resize((256, 256))
+        image_bg_removed_resized = image_bg_removed.resize((250, 250))
         image_bg_removed_resized.save(f'{self.path}/{self.file_name}-resized.png', 'PNG')
 
         resized = Image.open(f'{self.path}/{self.file_name}-resized.png')
