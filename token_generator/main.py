@@ -13,6 +13,7 @@ class TokenGenerator:
         self.input_path = input_path
         self.file_name = Path(input_path).stem
         self.path = Path(input_path).parent
+        self.full_path = f'{self.path}/{self.file_name}'
 
     def _remove_background(self):
         outputted_file_path = Path(self.input_path).with_name(
@@ -25,26 +26,29 @@ class TokenGenerator:
 
         return image_bg_removed
 
+    def _resize_image(self, image_bg_removed: Image):
+        image_bg_removed_resized = image_bg_removed.resize((256, 256))
+        image_bg_removed_resized.save(f'{self.full_path}-resized.png', 'PNG')
+
+        return image_bg_removed_resized
+
     def _add_token_to_image(self, image_bg_removed: Image):
         border_path = os.path.join(os.path.dirname(__file__), 'border.png')
         border = Image.open(border_path)
 
-        image_bg_removed_resized = image_bg_removed.resize((250, 250))
-        image_bg_removed_resized.save(f'{self.path}/{self.file_name}-resized.png', 'PNG')
+        image_bg_removed_resized = self._resize_image(image_bg_removed)
 
-        resized = Image.open(f'{self.path}/{self.file_name}-resized.png')
-
-        background = resized.convert('RGBA')
+        background = image_bg_removed_resized.convert('RGBA')
         overlay = border.convert('RGBA')
 
         background.paste(overlay, (0, 0), mask=overlay)
-        background.save(f'{self.path}/{self.file_name}-token.png', 'PNG')
+        background.save(f'{self.full_path}-token.png', 'PNG')
 
         return background
 
     def _clean_files(self):
-        Path(f'{self.path}/{self.file_name}-resized.png').unlink()
-        Path(f'{self.path}/{self.file_name}-removed.png').unlink()
+        Path(f'{self.full_path}-resized.png').unlink()
+        Path(f'{self.full_path}-removed.png').unlink()
 
     def create_token(self):
         print('Criando token...')
