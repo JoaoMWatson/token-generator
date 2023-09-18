@@ -65,4 +65,4 @@ def token_generator(input_path: str):
 @app.command()
 def remove_background(input_path: str):
     TokenGenerator(input_path).remove_background()
-    print("Background removido!")
+    print("Background removido!") 
