@@ -16,9 +16,7 @@ class TokenGenerator:
         self.full_path = f'{self.path}/{self.file_name}'
 
     def _remove_background(self):
-        outputted_file_path = Path(self.input_path).with_name(
-            f'{Path(self.input_path).stem}-removed.png'
-        )
+        outputted_file_path = f'{self.full_path}-removed.png'
 
         image = Image.open(self.input_path)
         image_bg_removed = remove(image)
