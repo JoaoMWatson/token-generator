@@ -15,7 +15,7 @@ class TokenGenerator:
         self.path = Path(input_path).parent
         self.full_path = f'{self.path}/{self.file_name}'
 
-    def _remove_background(self):
+    def remove_background(self):
         outputted_file_path = f'{self.full_path}-removed.png'
 
         image = Image.open(self.input_path)
@@ -50,7 +50,7 @@ class TokenGenerator:
 
     def create_token(self):
         print('Criando token...')
-        image_bg_removed = self._remove_background()
+        image_bg_removed = self.remove_background()
         token = self._add_token_to_image(image_bg_removed)
         self._clean_files()
 
@@ -59,5 +59,10 @@ class TokenGenerator:
 
 
 @app.command()
-def main(input_path: str):
+def token_generator(input_path: str):
     TokenGenerator(input_path).create_token()
+
+@app.command()
+def remove_background(input_path: str):
+    TokenGenerator(input_path).remove_background()
+    print("Background removido!")
