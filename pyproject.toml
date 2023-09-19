@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "token-generator"
-version = "v0.9.0"
+version = "v1.0.0"
 description = ""
 authors = ["Joao Pedro Watson <joaopedrowatson@hotmail.com>"]
 readme = "README.md"
