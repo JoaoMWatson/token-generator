@@ -54,15 +54,18 @@ class TokenGenerator:
         token = self._add_token_to_image(image_bg_removed)
         self._clean_files()
 
-        print('Ok' if token else 'Erro')
-        print('Token criado com sucesso!')
+        return token
 
 
 @app.command()
 def token_generator(input_path: str):
-    TokenGenerator(input_path).create_token()
+    token = TokenGenerator(input_path).create_token()
+
+    print('Token criado com sucesso' if token else 'Erro')
+    
 
 @app.command()
 def remove_background(input_path: str):
-    TokenGenerator(input_path).remove_background()
-    print("Background removido!") 
+    background_removed = TokenGenerator(input_path).remove_background()
+    
+    print('Background removido com sucesso' if background_removed else 'Erro')
